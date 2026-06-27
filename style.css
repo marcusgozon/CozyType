@@ -1,21 +1,21 @@
 :root {
-  --roast: #2f3e46;       /* warm dark brown */
-  --espresso: #354f52;    /* muted espresso tone */
-  --mahogany: #52796f;   /* gentle reddish brown */
-  --caramel: #84a98c;     /* creamy caramel beige */
-  --honey: #e6d3a3;      /* soft golden honey */
-  --cream: #faf7f2;      /* cozy off-white */
-  --steam: #f2e6d9;      /* warm light beige */
-  --chalk: #e0d5c2;      /* chalky tan */
-  --fog: #9a8c7a;        /* soft gray-brown */
-  --mist: #7c6a5a;       /* earthy mist tone */
+  --roast:  #1e1b18; 
+  --espresso: #2c2a26;  
+  --mahogany: #252121;    /* gentle reddish brown */
+  --caramel: #7e685b;      /* creamy caramel beige */
+  --honey: #af9b88;        /* soft golden honey */
+  --cream: #e6dfd5;   /* cozy off-white */
+  --steam: #d9cbb8;        /* warm light beige */
+  --chalk: #c2b6a3;     /* chalky tan */
+  --fog: #c6c0bb;         /* soft gray-brown */
+  --mist: #b3a18a;       /* earthy mist tone */
 }
 
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background:#181f24; 
+      background:#1c1915df;  
       display: flex;
       align-items: center;
       justify-content: center;
@@ -28,7 +28,7 @@
     #app {
       background: var(--roast);
       border-radius: 16px;
-      border: 1px solid var(--mahogany);
+      border: 2px solid var(--mahogany);
       overflow: hidden;
       width: 100%;
       max-width: 680px;

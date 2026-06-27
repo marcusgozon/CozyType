@@ -1,18 +1,24 @@
 const passages = {
     easy: [
-      "The bright sun slowly disappeared behind the tall mountain peaks.",
-      "Students gathered quickly outside, waiting for the teacher’s instructions.",
-      "My little brother laughed loudly after dropping his toy car.",
+      "the cat sleeps quietly under the warm sun",
+      "students read books together inside the small library",
+      "birds fly across the clear blue morning sky",
+      "children play happily outside near the green garden",
+      "the river flows gently beside the tall trees",
     ],
     medium: [
-      "During the heavy rain, classmates shared one umbrella, laughing together, while rushing toward the library, making the moment feel warm despite the cold weather.",
-      "The nervous student stood in front, holding notes tightly, then spoke confidently, surprising classmates, and earning applause that boosted his courage for future presentations.",
-      "During Sunday dinner, everyone shared stories, laughter filled the room, while delicious food brought comfort, reminding them that family moments are always worth cherishing together.",
+      "students gathered in the classroom early morning preparing their notes sharing ideas and waiting patiently for the teacher to arrive with important instructions and guidance",
+      "the children played happily outside near the garden running across the grass laughing together chasing butterflies and enjoying the warm sunshine that brightened their day",
+      "birds flew gracefully across the clear blue sky singing sweet melodies gliding with ease while the gentle breeze carried their songs through the peaceful valley",
+      "friends walked along the riverbank slowly talking about dreams sharing stories watching the water flow and feeling calm as the sunset painted the horizon",
+      "the library was quiet and peaceful students read books carefully turning pages softly learning new ideas and finding comfort in the silence of knowledge",
     ],
     hard: [
-      "The group stayed late in the computer lab, finishing their project. Each member contributed ideas, while laughter and teamwork made the stressful night enjoyable. They learned that cooperation, patience, and creativity are the keys to success, proving that even difficult tasks become lighter when shared with friends.",
-      "The crowd cheered loudly as the team scored another basket. Players ran across the court with determination, sweat dripping, yet smiles remained. Every pass, every shot, showed their dedication. Victory wasn’t just about winning; it was about unity, effort, and the unforgettable joy of playing together under bright lights.",
-      "Friends arrived at the beach early, carrying snacks and towels. The waves crashed gently, inviting them to swim. They built sandcastles, played volleyball, and shared stories. Sunset painted the sky orange, reminding them that simple moments with loved ones create lasting memories, more valuable than anything money could ever buy.",
+      "the programmer sat quietly at his desk typing lines of code fixing errors and testing functions the screen glowed brightly showing progress as the project slowly came together determination and patience guided him proving that persistence always leads to success when building something meaningful with creativity and effort",
+      "the office was busy with employees working on reports answering emails and attending meetings keyboards clicked constantly phones rang and conversations filled the air despite the rush teamwork kept everything organized reminding everyone that cooperation and discipline are essential for achieving goals and maintaining productivity throughout the day",
+      "the gamer focused intensely on the glowing monitor pressing keys quickly moving the character across the battlefield sounds of victory echoed through the room while strategy and reflexes combined to create excitement every match felt like a challenge teaching patience skill and the joy of competing with friends online",
+      "the student opened his laptop searching for information reading articles and writing notes for the upcoming exam the quiet room allowed concentration while the ticking clock reminded him of time passing learning required effort but the reward of knowledge gave motivation to continue studying with focus and determination",
+      "the cafe was filled with people using laptops sipping coffee and chatting softly the aroma of roasted beans mixed with the sound of typing creating a cozy atmosphere ideas flowed easily projects advanced and friendships grew stronger proving that simple places can inspire creativity and connection among individuals"
     ]
   };
 
@@ -219,15 +225,15 @@ autoLoadSounds();
     document.getElementById('r-acc').textContent = acc + '%';
     document.getElementById('r-chars').textContent = correct;
     const titles = wpm >= 80
-      ? ['Espresso shot!', 'Blazing fast.']
+      ? ['Above Average!', 'Lightning fast!']
       : wpm >= 50
-      ? ['Well brewed!', 'Solid pour.']
-      : ['Slow steep.', 'Take your time.'];
+      ? ['Good job!', 'Nice speed!']
+      : ['Keep practicing.', 'You can improve.'];
     const sub = wpm >= 80
-      ? 'You type faster than the beans grind.'
+      ? 'Your typing speed is excellent and shows strong skill.'
       : wpm >= 50
-      ? 'A satisfying result. The café approves.'
-      : 'Every great barista started somewhere.';
+      ? 'A solid performance, keep building consistency and accuracy.'
+      : 'Every expert started slow, keep practicing and you will improve.';
     document.getElementById('result-title').textContent = titles[Math.floor(Math.random() * titles.length)];
     document.getElementById('result-sub').textContent = sub;
     mainArea.style.display = 'none';
