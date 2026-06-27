@@ -69,6 +69,116 @@ const passages = {
     passageEl.innerHTML = html;
   }
 
+// ── Sound engine ──────────────────────────────────────────────────────────
+let audioCtx = null;
+let soundBuffers = {};   // filename → AudioBuffer
+let soundReady = false;
+let volume = 0.8; // Controlled by the slider
+
+const allSounds = ['altpitch.mp3', 'extrapitch.mp3', 'highpitch.mp3', 'lowpitch.mp3', 'midpitch.mp3', 'spacebar.mp3'];
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+// Load files silently on load
+async function autoLoadSounds() {
+  console.log("Loading keyboard sounds...");
+  let loadedCount = 0;
+
+  for (const name of allSounds) {
+    try {
+      const response = await fetch(name);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const arrayBuffer = await response.arrayBuffer();
+      const ctx = getAudioCtx();
+      
+      soundBuffers[name] = await ctx.decodeAudioData(arrayBuffer);
+      loadedCount++;
+    } catch (error) {
+      console.error(`Failed to automatically load sound file: ${name}`, error);
+    }
+  }
+
+  if (loadedCount > 0) {
+    soundReady = true;
+    console.log(`Sound engine ready: ${loadedCount}/${allSounds.length} sounds loaded.`);
+  }
+}
+
+function playSound(filename) {
+  if (!soundReady || !soundBuffers[filename]) return;
+  
+  const ctx = getAudioCtx();
+  const source = ctx.createBufferSource();
+  source.buffer = soundBuffers[filename];
+  
+  const gain = ctx.createGain();
+  gain.gain.value = volume; // Applies current volume level here
+  
+  source.connect(gain);
+  gain.connect(ctx.destination);
+  source.start(0);
+}
+
+// ── Key mapping logic ──────────────────────────────────────────────────────
+function getSoundForKey(key, code) {
+  if (code === 'Space' || key === ' ') {
+    return soundBuffers['spacebar.mp3'] ? 'spacebar.mp3' : 'midpitch.mp3';
+  }
+  if (code === 'Backspace' || key === 'Backspace') {
+    return soundBuffers['midpitch.mp3'] ? 'midpitch.mp3' : null;
+  }
+  
+  const upperKey = key.toUpperCase();
+  if (upperKey >= 'A' && upperKey <= 'Z' && upperKey.length === 1) {
+    const index = (upperKey.charCodeAt(0) - 65) % allSounds.length;
+    const mapped = allSounds[index];
+    if (soundBuffers[mapped]) return mapped;
+  }
+
+  if (soundBuffers['midpitch.mp3']) return 'midpitch.mp3';
+  return null;
+}
+
+// ── Play sound on keydown ─────────────────────────────────────────────────
+const typingInput = document.getElementById('typing-input');
+
+if (typingInput) {
+  typingInput.addEventListener('keydown', async e => {
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') {
+      await ctx.resume();
+    }
+
+    if (!soundReady) return;
+    
+    const snd = getSoundForKey(e.key, e.code);
+    if (snd) {
+      playSound(snd);
+    }
+  });
+}
+
+// ── Volume slider handler ──────────────────────────────────────────────────
+const volSlider = document.getElementById('vol-slider');
+const volValue = document.getElementById('vol-value');
+
+if (volSlider && volValue) {
+  volSlider.addEventListener('input', e => {
+    volume = parseFloat(e.target.value);
+    volValue.textContent = `${Math.round(volume * 100)}%`;
+  });
+}
+
+// Kick off file loading automatically
+autoLoadSounds();
+
+
   function calcWPM() {
     if (!state.startTime || !state.input.length) return 0;
     const mins = (Date.now() - state.startTime) / 60000;
