@@ -83,6 +83,9 @@ let volume = 0.8; // Controlled by the slider
 
 const allSounds = ['altpitch.mp3', 'extrapitch.mp3', 'highpitch.mp3', 'lowpitch.mp3', 'midpitch.mp3', 'spacebar.mp3'];
 
+// Filtered array specifically for general/alphabet keys so spacebar.mp3 is skipped
+const generalSounds = ['altpitch.mp3', 'extrapitch.mp3', 'highpitch.mp3', 'lowpitch.mp3', 'midpitch.mp3'];
+
 function getAudioCtx() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -133,20 +136,25 @@ function playSound(filename) {
 
 // ── Key mapping logic ──────────────────────────────────────────────────────
 function getSoundForKey(key, code) {
+  // 1. Explicitly handle Spacebar
   if (code === 'Space' || key === ' ') {
     return soundBuffers['spacebar.mp3'] ? 'spacebar.mp3' : 'midpitch.mp3';
   }
+  
+  // 2. Explicitly handle Backspace
   if (code === 'Backspace' || key === 'Backspace') {
     return soundBuffers['midpitch.mp3'] ? 'midpitch.mp3' : null;
   }
   
+  // 3. Handle A-Z keys (using generalSounds instead of allSounds)
   const upperKey = key.toUpperCase();
   if (upperKey >= 'A' && upperKey <= 'Z' && upperKey.length === 1) {
-    const index = (upperKey.charCodeAt(0) - 65) % allSounds.length;
-    const mapped = allSounds[index];
+    const index = (upperKey.charCodeAt(0) - 65) % generalSounds.length;
+    const mapped = generalSounds[index];
     if (soundBuffers[mapped]) return mapped;
   }
 
+  // 4. Fallback for other keys
   if (soundBuffers['midpitch.mp3']) return 'midpitch.mp3';
   return null;
 }
@@ -290,5 +298,27 @@ autoLoadSounds();
       init();
     });
   });
+
+  document.querySelectorAll('.diff-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.diff = btn.dataset.diff;
+      init();
+    });
+  });
+
+  //THEME LOGIC
+  const themeSelect = document.getElementById('theme-select');
+  const savedTheme = localStorage.getItem('theme') || 'cozy-dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (themeSelect) {
+    themeSelect.value = savedTheme;
+    themeSelect.addEventListener('change', (e) => {
+      const selectedTheme = e.target.value;
+      document.documentElement.setAttribute('data-theme', selectedTheme);
+      localStorage.setItem('theme', selectedTheme);
+    });
+  }
 
   init();
