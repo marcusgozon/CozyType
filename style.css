@@ -347,13 +347,31 @@ body {
       letter-spacing: 0.04em;
     }
 
-    .diff-btn.active {
+    .diff-btn.active,
+    .timer-btn.active {
       background: var(--mahogany);
       border-color: var(--caramel);
       color: var(--honey);
     }
 
-    .diff-btn:hover:not(.active) { border-color: var(--fog); color: var(--chalk); }
+    .diff-btn:hover:not(.active),
+    .timer-btn:hover:not(.active) {
+      border-color: var(--fog);
+      color: var(--chalk);
+    }
+
+    .timer-btn {
+      background: transparent;
+      border: 1px solid var(--mahogany);
+      border-radius: 20px;
+      color: var(--fog);
+      font-family: 'Lora', serif;
+      font-size: 11px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.04em;
+    }
 
     .result-overlay {
       display: none;
