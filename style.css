@@ -146,6 +146,7 @@ body {
       overflow: hidden;
       width: 100%;
       max-width: 800px;
+      scale:1.15;
     }
 
     .header {
@@ -394,7 +395,19 @@ body {
       font-style: italic;
       color: var(--fog);
       font-size: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 8px;
+    }
+
+    .result-prompt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 12px;
+      margin-bottom:18px;
+      color: var(--mist);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
     }
 
     .result-grid {

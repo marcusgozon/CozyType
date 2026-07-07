@@ -318,6 +318,12 @@ autoLoadSounds();
   document.getElementById('reset-btn').addEventListener('click', init);
   document.getElementById('retry-btn').addEventListener('click', init);
 
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && state.finished) {
+      init();
+    }
+  });
+
   document.querySelectorAll('.diff-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
